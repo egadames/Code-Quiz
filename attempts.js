@@ -42,62 +42,59 @@ console.log(keys.length)
 secondsLeft = 10;
 
 function setTime() {
-  var timerInterval = setInterval(function() {
+  var timerInterval = setTimeout(function() {
     secondsLeft--;
-    // timeEl.textContent = secondsLeft + " seconds left till colorsplosion.";
 
-    if(secondsLeft === 0) {
-      clearInterval(timerInterval);
-      "GAME OVER MOTHERFUCKER!!!";
-    }
-
-  }, 1000);
+    // if(secondsLeft === 0) {
+    //   clearInterval(timerInterval);
+    //   // $questionTitle.textContent = " ";
+    //   // "GAME OVER MOTHERFUCKER!!!";
+    // }
+  }, 10000);
 }
 
 function loadQuestion(index){
   $coding.textContent = " ";
-  setTime();
-  console.log(index);
   $questionTitle.textContent = (keys[index]);
-  console.log(keys[index]);
   $answer1.textContent = (keys[index+1][0]);
-  console.log(keys[index+1][0]);
   $answer2.textContent = (keys[index+1][1]);
-  console.log(keys[index+1][1]);
   $answer3.textContent = (keys[index+1][2]);
-  console.log(keys[index+1][2]);
-  // debugger;
+  // setTime();
+  debugger;
+  setTimeout($questionTitle.textContent = " ", 100000);
+
+  loadQuestion1(2)
+  // console.log(setTimeout(loadQuestion1(2), 10000));
   
-  loadQuestion1(2);
-  
+  // var intervalID = setTimeout(() => { myFunc('one', 'two', 'three'); }, 1000);
+  // loadQuestion1(2); 
 }
 
 function loadQuestion1(index){
-  $questionTitle.textContent = " ";
-  console.log(index);
+  // $questionTitle.textContent = " ";
+  // debugger;
   $questionTitle.textContent = (keys[index]);
-  console.log(keys[index]);
-  $answer1.textContent = (keys[index+1][0]);
-  console.log(keys[index+1][0]);
-  $answer2.textContent = (keys[index+1][1]);
-  console.log(keys[index+1][1]);
-  $answer3.textContent = (keys[index+1][2]);
-  console.log(keys[index+1][2]);
+  for(i=0;i<3;i++){
+    $answer1.textContent = (keys[index+1][i]);
+  }
   loadQuestion2(4);
 }
 
 function loadQuestion2(index){
   $questionTitle.textContent = " ";
-  console.log(index);
   $questionTitle.textContent = (keys[index]);
-  console.log(keys[index]);
   $answer1.textContent = (keys[index+1][0]);
-  console.log(keys[index+1][0]);
   $answer2.textContent = (keys[index+1][1]);
-  console.log(keys[index+1][1]);
   $answer3.textContent = (keys[index+1][2]);
-  console.log(keys[index+1][2]);
-  
+  loadQuestion3(6)
+}
+
+function loadQuestion3(index){
+  $questionTitle.textContent = " ";
+  $questionTitle.textContent = (keys[index]);
+  $answer1.textContent = (keys[index+1][0]);
+  $answer2.textContent = (keys[index+1][1]);
+  $answer3.textContent = (keys[index+1][2]);
 }
 
 $coding.addEventListener('click', function(event) {

@@ -1,111 +1,133 @@
 // These are the variables pulled from the HTMl. They are the checked boxes and the buttom.
-var $question1 = document.getElementById("question1");
-// 
 var $questionTitle = document.getElementById("questionsTitle");
-var $answer1 = document.getElementById("answer1");
-var $answer2 = document.getElementById("answer2");
-var $answer3 = document.getElementById("answer3");
-var $answer4 = document.getElementById("answer4");
+var $answersList = document.querySelector("#answers-list");
+var $start = document.getElementById("startQuiz");
 var $coding = document.getElementById("start");
-// var index = 0;
-var myQuestions = 
-	{
-		question0: "What is 10/2?",
-		answers0: ['3','5','115'],
-    // answer0: '1',
-    question1: "What is 3?",
-		answers1: ['0','4','11'],
-    // answer1: '2',
-    question2: "What is 10?",
-		answers2: ['3','7','8'],
-    // answer2: '3',
-    question3: "What is 2?",
-		answers3: ['9','6','11'],
-		// answer3: '2'
-	}
-;
+var index = 0;
+var $finalTitle = document.getElementById("finalTitle");
+var todoInput = document.querySelector("#final-text");
+var todoForm = document.querySelector("#final-form");
+var $finalList = document.querySelector("#final-list");
 
-var keys = Object.values(myQuestions)
-console.log(keys.length)
+var myQuestions = {
+  question0: "Commonly used data types DO NOT include?",
+  answers0: ["strings", "booleans", "alerts", "numbers"],
+  // answer0: '2',
+  question1: "The condition in an if/else statement is enclosed within ______?",
+  answers1: ["quotes", "curly brackets", "parenthesis", "square brackets"],
+  // answer1: '2',
+  question2: "Arrays in Javascript can be used to store _____?",
+  answers2: ["numbers and strings", "other arrays", "booleans", "all of the above"],
+  // answer2: '3',
+  question3: "String values must be enclosed within _____ when being assigned to variables?",
+  answers3: ["commas", "curly brackets", "quotes", "parentheses"],
+  // answer3: "2",
+  question4: "A very useful tool used during development and debugging for printing content to the debugger is:?",
+  answers4: ["Javascript", "terminal/bash", "for loops", "console.log"],
+  // answer4: "3"
+};
 
-// function questionIndex(index){
-//   index = index; 
-//   if(index < 4) {
-//       index++;
-//   } else {
-//       index = 0;
-//   // loadEnd();
-//   }
-//   loadQuestion();
-// }
+var values = Object.values(myQuestions);
 
-secondsLeft = 10;
+var count = 0;
+var score = 0;
 
-function setTime() {
-  var timerInterval = setTimeout(function() {
-    secondsLeft--;
+function checkAnswer() {
+  // if(count === 5){
+  //   finalScreen();
+  // }
 
-    // if(secondsLeft === 0) {
-    //   clearInterval(timerInterval);
-    //   // $questionTitle.textContent = " ";
-    //   // "GAME OVER MOTHERFUCKER!!!";
-    // }
-  }, 10000);
-}
-
-function loadQuestion(index){
-  $coding.textContent = " ";
-  $questionTitle.textContent = (keys[index]);
-  $answer1.textContent = (keys[index+1][0]);
-  $answer2.textContent = (keys[index+1][1]);
-  $answer3.textContent = (keys[index+1][2]);
-  // setTime();
-  debugger;
-  setTimeout($questionTitle.textContent = " ", 100000);
-
-  loadQuestion1(2)
-  // console.log(setTimeout(loadQuestion1(2), 10000));
-  
-  // var intervalID = setTimeout(() => { myFunc('one', 'two', 'three'); }, 1000);
-  // loadQuestion1(2); 
-}
-
-function loadQuestion1(index){
-  // $questionTitle.textContent = " ";
-  // debugger;
-  $questionTitle.textContent = (keys[index]);
-  for(i=0;i<3;i++){
-    $answer1.textContent = (keys[index+1][i]);
+  var element = event.target;
+  var response = element.parentElement.getAttribute('data-index');
+  var statement = document.createElement("li");
+  if (count === 0 && response == 2) {
+    $answersList.textContent = ("YOU ARE RIGHT");
+    score++;
+  } else if (count === 1 && response == 2) {
+    $answersList.textContent = ("YOU ARE RIGHT");
+    score++;
+  } else if (count === 2 && response == 3) {
+    $answersList.textContent = ("YOU ARE RIGHT");
+    score++;
+  } else if (count === 3 && response == 2) {
+    $answersList.textContent = ("YOU ARE RIGHT");
+    score++;
+  } else if (count === 4 && response == 3) {
+    $answersList.textContent = ("YOU ARE RIGHT");
+    score++;
+  } else {
+    $answersList.textContent = "YOU ARE WRONG!!! YOU SUCK";
   }
-  loadQuestion2(4);
-}
-
-function loadQuestion2(index){
-  $questionTitle.textContent = " ";
-  $questionTitle.textContent = (keys[index]);
-  $answer1.textContent = (keys[index+1][0]);
-  $answer2.textContent = (keys[index+1][1]);
-  $answer3.textContent = (keys[index+1][2]);
-  loadQuestion3(6)
-}
-
-function loadQuestion3(index){
-  $questionTitle.textContent = " ";
-  $questionTitle.textContent = (keys[index]);
-  $answer1.textContent = (keys[index+1][0]);
-  $answer2.textContent = (keys[index+1][1]);
-  $answer3.textContent = (keys[index+1][2]);
-}
-
-$coding.addEventListener('click', function(event) {
-  // event.stopPropagation();
-  loadQuestion(0);
-})
   
+  setTimeout( function(){
+    // here add the code (or call a function) to be executed after pause
+    count++;
+    index +=2;
+    loadQuestion();
+   }, 500 );
+
+   return(score);
+}
+
+function loadQuestion() {
+  if (count === 5) {
+    finalScreen();
+  } else {
+  $coding.textContent = " "; 
+  $questionTitle.textContent = values[index];
+  $answersList.textContent =" ";
+  for (var i = 0; i < 4; i++) {
+    var li = document.createElement("li");
+    var button = document.createElement("button");
+    button.textContent = values[index + 1][i];
+    li.setAttribute('data-index', i)
+    button.addEventListener("click", checkAnswer);
+    $answersList.appendChild(li);
+    li.appendChild(button);
+  }
+  }
+}
+
+function finalScreen(){
+  $answersList.textContent = " ";
+  $questionTitle.textContent = " "; 
+  $finalTitle.textContent = "ALL DONE";
+  var finalLi = document.createElement("li");
+  var submit = document.createElement('button');
+  var label = document.createElement('label');
+  var input = document.createElement("input");
+  finalLi.textContent = "your score is " + score;
+  label.textContent = " Enter Intials";
+  submit.textContent = "Submit"
+  submit.setAttribute('href', "./highscores.html")
+  $finalList.appendChild(finalLi)
+  $finalList.appendChild(label);
+  $finalList.appendChild(input);
+  $finalList.appendChild(submit);
+}
+// /* <div class="finals">
+// <form id="final-form" method="POST">
+//   <!-- <label for="final-text">Add a final:</label>
+//   <input type="text" placeholder="What needs to be done?" name="final-text" id="final-text" /> -->
+// </form>
+// <!-- <p>final Count: <span id="final-count">0</span></p>
+// <ul id="final-list"></ul> -->
+// </div> */
 
 
+$start.addEventListener("click", loadQuestion);
 
-// var $question2 = document.getElementById("question2");
-// var $question3 = document.getElementById("question3");
-// var $question4 = document.getElementById("question4");
-// var $question5 = document.getElementById("question5");
+
+// secondsLeft = 10;
+
+// function setTime() {
+//   var timerInterval = setTimeout(function() {
+//     secondsLeft--;
+
+//     // if(secondsLeft === 0) {
+//     //   clearInterval(timerInterval);
+//     //   // $questionTitle.textContent = " ";
+//     //   // "GAME OVER MOTHERFUCKER!!!";
+//     // }
+//   }, 10000);
+// }

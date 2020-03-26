@@ -3,11 +3,13 @@ var $questionTitle = document.getElementById("questionsTitle");
 var $answersList = document.querySelector("#answers-list");
 var $start = document.getElementById("startQuiz");
 var $coding = document.getElementById("start");
-var index = 0;
 var $finalTitle = document.getElementById("finalTitle");
-var todoInput = document.querySelector("#final-text");
-var todoForm = document.querySelector("#final-form");
 var $finalList = document.querySelector("#final-list");
+var index = 0;
+var count = 0;
+var score = 0;
+
+
 
 var myQuestions = {
   question0: "Commonly used data types DO NOT include?",
@@ -29,17 +31,14 @@ var myQuestions = {
 
 var values = Object.values(myQuestions);
 
-var count = 0;
-var score = 0;
-
-function checkAnswer() {
-  // if(count === 5){
-  //   finalScreen();
-  // }
-
+function checkAnswer(event) {
   var element = event.target;
   var response = element.parentElement.getAttribute('data-index');
   var statement = document.createElement("li");
+
+  // This is the logic to check if the user's response is correct
+  // the count is to identify the question
+  // response is the data-index labeled with each mouse click. They 
   if (count === 0 && response == 2) {
     $answersList.textContent = ("YOU ARE RIGHT");
     score++;
@@ -58,9 +57,10 @@ function checkAnswer() {
   } else {
     $answersList.textContent = "YOU ARE WRONG!!! YOU SUCK";
   }
+
   
+  // This allows the text informing if right or wrong to remain on the screen before going to the next question.
   setTimeout( function(){
-    // here add the code (or call a function) to be executed after pause
     count++;
     index +=2;
     loadQuestion();
@@ -70,6 +70,7 @@ function checkAnswer() {
 }
 
 function loadQuestion() {
+  console.log(count);
   if (count === 5) {
     finalScreen();
   } else {
@@ -92,42 +93,56 @@ function finalScreen(){
   $answersList.textContent = " ";
   $questionTitle.textContent = " "; 
   $finalTitle.textContent = "ALL DONE";
+
   var finalLi = document.createElement("li");
-  var submit = document.createElement('button');
-  var label = document.createElement('label');
-  var input = document.createElement("input");
   finalLi.textContent = "your score is " + score;
+
+  var submit = document.createElement('button');
+  submit.textContent = "Submit";
+
+  var label = document.createElement('label');
   label.textContent = " Enter Intials";
-  submit.textContent = "Submit"
-  submit.setAttribute('href', "./highscores.html")
+
+  var input = document.createElement("input");
+
   $finalList.appendChild(finalLi)
   $finalList.appendChild(label);
   $finalList.appendChild(input);
   $finalList.appendChild(submit);
-}
-// /* <div class="finals">
-// <form id="final-form" method="POST">
-//   <!-- <label for="final-text">Add a final:</label>
-//   <input type="text" placeholder="What needs to be done?" name="final-text" id="final-text" /> -->
-// </form>
-// <!-- <p>final Count: <span id="final-count">0</span></p>
-// <ul id="final-list"></ul> -->
-// </div> */
 
+  submit.addEventListener("click", function(event) {
+    // debugger;
+    var highscores;
+    var allIntials;
+    event.preventDefault();
+    var submitText = input.value;
+    var currentScore = score;
+    console.log(typeof currentScore);
+    
+  
+    if (localStorage.getItem('highscores')) {
+      highscores = JSON.parse(localStorage.getItem('highscores'));
+      allIntials = JSON.parse(localStorage.getItem('allIntials'));
+      highscores.push(currentScore);
+      currentScore.push(submitText);
+      localStorage.setItem("intials", JSON.stringify(allIntials));
+      localStorage.setItem("highscores", JSON.stringify(highscores));
+
+      // highscores = JSON.parse(localStorage.getItem('highscores'));
+      // highscores.push(currentScore);
+      // localStorage.setItem("highscores", JSON.stringify(highscores));
+
+    } else{
+      console.log("creating string")
+      highscores = [];
+      allIntials = [];
+      highscores.push(currentScore);
+      currentScore.push(submitText);
+      localStorage.setItem("highscores", JSON.stringify(highscores));
+      localStorage.setItem("intials", JSON.stringify(allIntials));
+    }
+    // window.location.href = "./highscores.html";
+  });
+}
 
 $start.addEventListener("click", loadQuestion);
-
-
-// secondsLeft = 10;
-
-// function setTime() {
-//   var timerInterval = setTimeout(function() {
-//     secondsLeft--;
-
-//     // if(secondsLeft === 0) {
-//     //   clearInterval(timerInterval);
-//     //   // $questionTitle.textContent = " ";
-//     //   // "GAME OVER MOTHERFUCKER!!!";
-//     // }
-//   }, 10000);
-// }

@@ -1,15 +1,16 @@
 // These are the variables pulled from the HTMl. They are the checked boxes and the buttom.
+var $question = document.querySelector("#question");
 var $questionTitle = document.getElementById("questionsTitle");
 var $answersList = document.querySelector("#answers-list");
 var $start = document.getElementById("startQuiz");
 var $coding = document.getElementById("start");
 var $finalTitle = document.getElementById("finalTitle");
 var $finalList = document.querySelector("#final-list");
+var $timer = document.querySelector(".time");
 var index = 0;
 var count = 0;
 var score = 0;
-
-
+var secondsElapsed = 10;
 
 var myQuestions = {
   question0: "Commonly used data types DO NOT include?",
@@ -32,9 +33,9 @@ var myQuestions = {
 var values = Object.values(myQuestions);
 
 function checkAnswer(event) {
+
   var element = event.target;
   var response = element.parentElement.getAttribute('data-index');
-  var statement = document.createElement("li");
 
   // This is the logic to check if the user's response is correct
   // the count is to identify the question
@@ -56,11 +57,19 @@ function checkAnswer(event) {
     score++;
   } else {
     $answersList.textContent = "YOU ARE WRONG!!! YOU SUCK";
+    console.log(secondsElapsed)
+    if(secondsElapsed <= 10){
+      console.log(secondsElapsed)
+      stopTimer();
+      return;
+    }else{
+      secondsElapsed -= 10;
+    }
+    
   }
-
-  
   // This allows the text informing if right or wrong to remain on the screen before going to the next question.
   setTimeout( function(){
+    checkTime();
     count++;
     index +=2;
     loadQuestion();
@@ -69,24 +78,53 @@ function checkAnswer(event) {
    return(score);
 }
 
+function setTimer(){
+  if (secondsElapsed > 0) {    
+    interval = setInterval(function() {
+      secondsElapsed--;
+      $timer.textContent = secondsElapsed;
+      checkTime();
+    }, 1000);
+}
+  return(secondsElapsed);
+}
+
+function checkTime() {
+  if (secondsElapsed <= 0) {
+    secondsElapsed === 0;
+    stopTimer();
+  }
+}
+
+function stopTimer() {
+  clearInterval(interval);
+  // console.log(interval)
+  // console.log(secondsElapsed)
+  finalScreen();
+}
+
 function loadQuestion() {
   console.log(count);
   if (count === 5) {
-    finalScreen();
+    stopTimer();
+    return;
   } else {
   $coding.textContent = " "; 
-  $questionTitle.textContent = values[index];
   $answersList.textContent =" ";
+  // $question.textContent = " ";
+  $questionTitle.textContent = values[index];
+  
   for (var i = 0; i < 4; i++) {
     var li = document.createElement("li");
     var button = document.createElement("button");
-    button.textContent = values[index + 1][i];
+    button.textContent = i + 1 + ". " + values[index + 1][i];
     li.setAttribute('data-index', i)
     button.addEventListener("click", checkAnswer);
     $answersList.appendChild(li);
     li.appendChild(button);
   }
-  }
+}
+
 }
 
 function finalScreen(){
@@ -111,26 +149,40 @@ function finalScreen(){
   $finalList.appendChild(submit);
 
   submit.addEventListener("click", function(event) {
-    // debugger;
     var highscores;
-    event.preventDefault();
     var submitText = input.value;
-    var currentScore = {Intials: submitText, score: score};
+    var currentScore = score;
     console.log(currentScore);
   
     if (localStorage.getItem('highscores')) {
-      console.log(localStorage.getItem('highscores'))
       highscores = JSON.parse(localStorage.getItem('highscores'));
       highscores.push(currentScore);
       localStorage.setItem("highscores", JSON.stringify(highscores));
     } else{
-      console.log("creating string")
       highscores = [];
       highscores.push(currentScore);
       localStorage.setItem("highscores", JSON.stringify(highscores));
+    }
+
+    if (localStorage.getItem('intials')) {
+      intials = JSON.parse(localStorage.getItem('intials'));
+      intials.push(submitText);
+      localStorage.setItem("intials", JSON.stringify(intials));
+    } else{
+      intials = [];
+      intials.push(submitText);
+      localStorage.setItem("intials", JSON.stringify(intials));
     }
     window.location.href = "./highscores.html";
   });
 }
 
-$start.addEventListener("click", loadQuestion);
+// $start.addEventListener("click", setTimer);
+$start.addEventListener("click", function(event) {
+  loadQuestion();
+  setTimer();
+});
+  
+
+
+

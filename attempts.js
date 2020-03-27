@@ -1,15 +1,16 @@
 // These are the variables pulled from the HTMl. They are the checked boxes and the buttom.
+var $question = document.querySelector("#question");
 var $questionTitle = document.getElementById("questionsTitle");
 var $answersList = document.querySelector("#answers-list");
 var $start = document.getElementById("startQuiz");
 var $coding = document.getElementById("start");
 var $finalTitle = document.getElementById("finalTitle");
 var $finalList = document.querySelector("#final-list");
+var $timer = document.querySelector(".time");
 var index = 0;
 var count = 0;
 var score = 0;
-
-
+var secondsElapsed = 75;
 
 var myQuestions = {
   question0: "Commonly used data types DO NOT include?",
@@ -56,9 +57,8 @@ function checkAnswer(event) {
     score++;
   } else {
     $answersList.textContent = "YOU ARE WRONG!!! YOU SUCK";
+    secondsElapsed -= 10;
   }
-
-  
   // This allows the text informing if right or wrong to remain on the screen before going to the next question.
   setTimeout( function(){
     count++;
@@ -69,14 +69,42 @@ function checkAnswer(event) {
    return(score);
 }
 
+function setTimer(){
+  // loadQuestion();
+  if (secondsElapsed > 0) {    
+    interval = setInterval(function() {
+      secondsElapsed--;
+      $timer.textContent = secondsElapsed;
+      checkTime();
+    }, 1000);
+
+} 
+
+return(secondsElapsed);
+}
+
+function checkTime() {
+  if (secondsElapsed === 0) {
+    stopTimer();
+  }
+}
+
+function stopTimer() {
+  clearInterval(interval);
+  finalScreen();
+}
+
 function loadQuestion() {
   console.log(count);
   if (count === 5) {
-    finalScreen();
+    stopTimer();
+    // finalScreen();
   } else {
   $coding.textContent = " "; 
-  $questionTitle.textContent = values[index];
   $answersList.textContent =" ";
+  // $question.textContent = " ";
+  $questionTitle.textContent = values[index];
+  
   for (var i = 0; i < 4; i++) {
     var li = document.createElement("li");
     var button = document.createElement("button");
@@ -86,7 +114,8 @@ function loadQuestion() {
     $answersList.appendChild(li);
     li.appendChild(button);
   }
-  }
+}
+
 }
 
 function finalScreen(){
@@ -111,38 +140,41 @@ function finalScreen(){
   $finalList.appendChild(submit);
 
   submit.addEventListener("click", function(event) {
-    // debugger;
     var highscores;
-    var allIntials;
-    event.preventDefault();
+    // event.preventDefault();
     var submitText = input.value;
     var currentScore = score;
-    console.log(typeof currentScore);
-    
+    console.log(currentScore);
   
     if (localStorage.getItem('highscores')) {
       highscores = JSON.parse(localStorage.getItem('highscores'));
-      allIntials = JSON.parse(localStorage.getItem('allIntials'));
       highscores.push(currentScore);
-      currentScore.push(submitText);
-      localStorage.setItem("intials", JSON.stringify(allIntials));
       localStorage.setItem("highscores", JSON.stringify(highscores));
-
-      // highscores = JSON.parse(localStorage.getItem('highscores'));
-      // highscores.push(currentScore);
-      // localStorage.setItem("highscores", JSON.stringify(highscores));
-
     } else{
-      console.log("creating string")
       highscores = [];
-      allIntials = [];
       highscores.push(currentScore);
-      currentScore.push(submitText);
       localStorage.setItem("highscores", JSON.stringify(highscores));
-      localStorage.setItem("intials", JSON.stringify(allIntials));
     }
-    // window.location.href = "./highscores.html";
+
+    if (localStorage.getItem('intials')) {
+      intials = JSON.parse(localStorage.getItem('intials'));
+      intials.push(submitText);
+      localStorage.setItem("intials", JSON.stringify(intials));
+    } else{
+      intials = [];
+      intials.push(submitText);
+      localStorage.setItem("intials", JSON.stringify(intials));
+    }
+    window.location.href = "./highscores.html";
   });
 }
 
-$start.addEventListener("click", loadQuestion);
+// $start.addEventListener("click", setTimer);
+$start.addEventListener("click", function(event) {
+  loadQuestion();
+  setTimer();
+});
+  
+
+
+

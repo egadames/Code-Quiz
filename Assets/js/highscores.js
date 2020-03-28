@@ -9,7 +9,7 @@ final = [];
 
 if(list){
     for (var i = 0; i < list.length; i++) {
-        final[i] = intials[i] + " - " + list[i];
+        final[i] = i + 1 + ". " + intials[i] + " - " + list[i];
         var li = document.createElement("li");
         li.textContent = final[i];
         $list.appendChild(li);

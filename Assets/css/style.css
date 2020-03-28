@@ -14,6 +14,9 @@ header .highscores {
     padding: 1%;
 }
 
+a{
+    color: #0085CA;
+}
 main{
     text-align: center;
     padding: 3%;

@@ -22,7 +22,7 @@ if(list){
 
 // This is the event listener that will send the user back to the starting page
 $back.addEventListener("click", function(event) {
-    window.location.href = "./index.html";
+    window.location.href = "./quiz.html";
 });
 
 // This will clear the highscore list when the user clicks on the button.

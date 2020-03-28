@@ -1,4 +1,5 @@
 // These are the variables .
+
 var $question = document.querySelector("#question");
 var $questionTitle = document.getElementById("questionsTitle");
 var $answersList = document.querySelector("#answers-list");
@@ -28,7 +29,6 @@ var myQuestions = {
 
   question4: "A very useful tool used during development and debugging for printing content to the debugger is:?",
   answers4: ["Javascript", "terminal/bash", "for loops", "console.log"],
-
 };
 
 // This converts the objects and pulls out the values so they can be indexed later in the code
@@ -76,7 +76,6 @@ function checkAnswer(event) {
     index +=2;
     loadQuestion();
    }, 500 );
-
    return(score);
 }
 
@@ -132,6 +131,7 @@ function loadQuestion() {
 // This is the high score screen that is loaded at the end of the game. This terminates the game 
 // and loads the score into local storage.
 function finalScreen(){
+
   $answersList.textContent = " ";
   $questionTitle.textContent = " "; 
   $finalTitle.textContent = "ALL DONE";
@@ -173,6 +173,7 @@ function finalScreen(){
       localStorage.setItem("intials", JSON.stringify(intials));
     }
     window.location.href = "./highscores.html";
+
   });
 }
 
@@ -183,6 +184,7 @@ $start.addEventListener("click", function(event) {
   loadQuestion();
   setTimer();
 });
+
   
 
 

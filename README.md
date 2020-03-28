@@ -29,7 +29,7 @@ the timer will reduce by 10 seconds.
 
 ### Challenges
 
-- This app was challenging as there were a lot of fe
+- This app was challenging as there were a lot of parts that needed to be added in order for the app to work.
 
 - The most difficult issue were trying make the questions appear and tranistion to each question. 
 
@@ -39,3 +39,7 @@ the timer will reduce by 10 seconds.
 
 ### Screenshot
 
+![Start Screen](./Assets/StartScreen.JPG)
+![Final](./Assets/final.JPG)
+![Quiz](./Assets/Quiz.JPG)
+![highscores](./Assets/highscores.JPG)

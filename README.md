@@ -1,42 +1,41 @@
-# 04 Web APIs: Code Quiz
+# Project Title
 
-As you proceed in your career as a web developer, you will probably be asked to complete a coding assessment, which is typically a combination of multiple-choice questions and interactive challenges. Build a timed code quiz with multiple-choice questions. This app will run in the browser and feature dynamically updated HTML and CSS powered by your JavaScript code. It will also feature a clean and polished user interface and be responsive, ensuring that it adapts to multiple screen sizes.
+Homework 3 - Code Quiz by Erik Adames
 
-## User Story
+## Location of URLs
 
-```
-AS A coding bootcamp student
-I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
-SO THAT I can gauge my progress compared to my peers
-```
+This is the link to the github repo:
 
-## Acceptance Criteria
+https://github.com/egadames/hw4
 
-```
-GIVEN I am taking a code quiz
-WHEN I click the start button
-THEN a timer starts and I am presented with a question
-WHEN I answer a question
-THEN I am presented with another question
-WHEN I answer a question incorrectly
-THEN time is subtracted from the clock
-WHEN all questions are answered or the timer reaches 0
-THEN the game is over
-WHEN the game is over
-THEN I can save my initials and score
-```
+This is the link to the live website:
 
-The following animation demonstrates the application functionality:
+https://egadames.github.io/hw3/
 
-![code quiz](./Assets/04-web-apis-homework-demo.gif)
+### Description
 
-### Review
+- The app is a website that will when the start button is pressed a quiz will start.
 
-You are required to submit the following for review:
+- the game has 5 questions and has a timer with 75 seconds. If a question is answered incorrectly
+the timer will reduce by 10 seconds.
 
-* The URL of the functional, deployed application.
+- The end of the game the score is shown to the user and the user is allowed to enter their intials.
 
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
+- The highscore is loaded into a list and it will stay there until the browser cache is deleted.
 
-- - -
-© 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
+### Technologies
+
+- The website uses HTML, CSS and Javascript.
+
+### Challenges
+
+- This app was challenging as there were a lot of fe
+
+- The most difficult issue were trying make the questions appear and tranistion to each question. 
+
+- By the end I was able to get a good understanding of transversing the DOM and how to use javascript to make changes to the html elements.
+
+- Also I got a better understand of javascript. I still believe I need to make my logic a little more effcient.
+
+### Screenshot
+

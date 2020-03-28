@@ -1,4 +1,4 @@
-// These are the variables pulled from the HTMl. They are the checked boxes and the buttom.
+// These are the variables .
 var $question = document.querySelector("#question");
 var $questionTitle = document.getElementById("questionsTitle");
 var $answersList = document.querySelector("#answers-list");
@@ -10,30 +10,32 @@ var $timer = document.querySelector(".time");
 var index = 0;
 var count = 0;
 var score = 0;
-var secondsElapsed = 10;
+var secondsElapsed = 75;
 
+// THis is the objects that contains the questions and answers
 var myQuestions = {
   question0: "Commonly used data types DO NOT include?",
   answers0: ["strings", "booleans", "alerts", "numbers"],
-  // answer0: '2',
+
   question1: "The condition in an if/else statement is enclosed within ______?",
   answers1: ["quotes", "curly brackets", "parenthesis", "square brackets"],
-  // answer1: '2',
+
   question2: "Arrays in Javascript can be used to store _____?",
   answers2: ["numbers and strings", "other arrays", "booleans", "all of the above"],
-  // answer2: '3',
+
   question3: "String values must be enclosed within _____ when being assigned to variables?",
   answers3: ["commas", "curly brackets", "quotes", "parentheses"],
-  // answer3: "2",
+
   question4: "A very useful tool used during development and debugging for printing content to the debugger is:?",
   answers4: ["Javascript", "terminal/bash", "for loops", "console.log"],
-  // answer4: "3"
+
 };
 
+// This converts the objects and pulls out the values so they can be indexed later in the code
 var values = Object.values(myQuestions);
 
 function checkAnswer(event) {
-
+// This is the event target and it will load a index so it be used in the logic later
   var element = event.target;
   var response = element.parentElement.getAttribute('data-index');
 
@@ -78,6 +80,7 @@ function checkAnswer(event) {
    return(score);
 }
 
+// This function is first created when the game is started and starts the timer.
 function setTimer(){
   if (secondsElapsed > 0) {    
     interval = setInterval(function() {
@@ -89,6 +92,7 @@ function setTimer(){
   return(secondsElapsed);
 }
 
+// This is loaded every time with the timer and checks if it is below zero. 
 function checkTime() {
   if (secondsElapsed <= 0) {
     secondsElapsed === 0;
@@ -96,13 +100,13 @@ function checkTime() {
   }
 }
 
+// This function once activated will end the timer and go to the final screen
 function stopTimer() {
   clearInterval(interval);
-  // console.log(interval)
-  // console.log(secondsElapsed)
   finalScreen();
 }
 
+// Everytime this is loaded it creates the questions and answers for each quiz.
 function loadQuestion() {
   console.log(count);
   if (count === 5) {
@@ -111,7 +115,6 @@ function loadQuestion() {
   } else {
   $coding.textContent = " "; 
   $answersList.textContent =" ";
-  // $question.textContent = " ";
   $questionTitle.textContent = values[index];
   
   for (var i = 0; i < 4; i++) {
@@ -124,25 +127,21 @@ function loadQuestion() {
     li.appendChild(button);
   }
 }
-
 }
 
+// This is the high score screen that is loaded at the end of the game. This terminates the game 
+// and loads the score into local storage.
 function finalScreen(){
   $answersList.textContent = " ";
   $questionTitle.textContent = " "; 
   $finalTitle.textContent = "ALL DONE";
-
   var finalLi = document.createElement("li");
   finalLi.textContent = "your score is " + score;
-
   var submit = document.createElement('button');
   submit.textContent = "Submit";
-
   var label = document.createElement('label');
   label.textContent = " Enter Intials";
-
   var input = document.createElement("input");
-
   $finalList.appendChild(finalLi)
   $finalList.appendChild(label);
   $finalList.appendChild(input);
@@ -177,7 +176,9 @@ function finalScreen(){
   });
 }
 
-// $start.addEventListener("click", setTimer);
+// This is the event listener that is activated when the start game button is pressed. 
+// It loads the first question screen and starts the game timer.
+
 $start.addEventListener("click", function(event) {
   loadQuestion();
   setTimer();
